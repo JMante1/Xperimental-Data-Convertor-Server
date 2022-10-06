@@ -1,12 +1,28 @@
 <html>
    <body>
       <h1>File Upload</h1>
-      <p>Select a File to upload and press submit</p>
       <form action = "/uploader" method = "POST" 
          enctype = "multipart/form-data">
-         <input type = "file" name = "file" />
-         <input type = "submit"/>
-      </form>
-      <p><a href="/file_list">See All Uploaded Files</a></p>   
+         <h3>SynBioHub</h3>
+         <label for="username1">Username</label><br>
+         <input type="text" id="sbhusername" name="sbhusername"><br>
+         <label for="pwd1">Password</label><br>
+         <input type="password" id="sbhpwd" name="sbhpwd"><br>
+         <label for="collec1">Submission Collection Name</label><br>
+         <input type="text" id="sbhcollec" name="sbhcollec"><br>
+         <label for="overwrite1">Overwrite Collections of the same name?</label><br>
+         <input type="checkbox" id="sbhover" name="sbhover"><br>
+         <br>
+         <h3>Flapjack</h3>
+         <label for="username2">Username</label><br>
+         <input type="text" id="fjusername" name="fjusername"><br>
+         <label for="pwd2">Password</label><br>
+         <input type="password" id="fjpwd" name="fjpwd"><br>
+         <br>
+         <h3>Excel File</h3>
+         <input type = "file" name = "file" /><br>
+         <br>
+         <input type = "submit"/><br>
+      </form>  
    </body>
 </html>

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
-from werkzeug.utils import secure_filename
 import os, flask
+import xperimental_data_conv.main as xdc
 
 cwd = os.getcwd()
 upload_folder = os.path.join(cwd,'public')
@@ -10,36 +10,33 @@ app = Flask(__name__)
 
 @app.route('/status')
 def status():
-    return("The Public Server for plugin testing is up and running")
+    return("The XDC Server is up and running")
 
 @app.route('/upload')
 def upload_file_template():
-   return render_template('upload.html')
+    return render_template('upload.html')
 
-@app.route('/file_list')
-def file_list():
-    f_list = os.listdir(upload_folder)
-    return render_template('file_list.html', f_list = f_list)
 	
 @app.route('/uploader', methods = ['POST'])
 def upload_file():
-   if request.method == 'POST':
-      f = request.files['file']
-      f.save(os.path.join(upload_folder, secure_filename(f.filename)))
-      return render_template('upload_success.html', file_uploaded=secure_filename(f.filename))
+    if request.method == 'POST':
+        f = request.files['file']
+        fj_user = request.form['fjusername']
+        fj_pass = request.form['fjpwd']
+        sbh_user = request.form['sbhusername']
+        sbh_pass = request.form['sbhpwd']
+        sbh_collec = request.form['sbhcollec']
 
-@app.route('/delete/<file_name>')
-def delete(file_name):
-    try:
-        os.remove(os.path.join(upload_folder, secure_filename(file_name)))
-        return render_template('file_deleted.html', file_name=secure_filename(file_name))
-    except:
-        return render_template('Static_File_Not_Found.html', file_name=secure_filename(file_name)), 404
+        if 'sbhover' in request.form:
+            sbh_overwrite = True
+        else:
+            sbh_overwrite = False
 
-
-@app.route('/download/<file_name>')
-def download(file_name):
-    try:
-        return flask.send_from_directory(upload_folder, secure_filename(file_name))
-    except:
-        return render_template('Static_File_Not_Found.html', file_name=secure_filename(file_name)), 404
+        try:
+            sbol_collec_url = xdc.experimental_data_uploader(f, fj_user, fj_pass,
+                                    sbh_user, sbh_pass, sbh_collec, sbh_overwrite=sbh_overwrite,
+                                    fj_overwrite=True)
+            sbol_collec_url = f'{sbol_collec_url}{sbh_collec}_collection/1'
+            return render_template('upload_success.html', collec_uploaded=sbol_collec_url)
+        except:
+            return render_template('upload_failure.html', collec_uploaded=sbh_collec)
