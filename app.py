@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
-import os, flask
+import os
+import sys
+import traceback
 import xperimental_data_conv.main as xdc
 
 cwd = os.getcwd()
@@ -38,5 +40,9 @@ def upload_file():
                                     fj_overwrite=True)
             sbol_collec_url = f'{sbol_collec_url}{sbh_collec}_collection/1'
             return render_template('upload_success.html', collec_uploaded=sbol_collec_url)
-        except:
-            return render_template('upload_failure.html', collec_uploaded=sbh_collec)
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            lnum = exc_tb.tb_lineno
+            ex = f'Exception is: {e}, exc_type: {exc_type}, exc_obj: {exc_obj}, fname: {fname}, line_number: {lnum}, traceback: {traceback.format_exc()}'
+            return render_template('upload_failure.html', collec_uploaded=sbh_collec, error_message=ex)
