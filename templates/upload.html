@@ -4,20 +4,20 @@
       <form action = "/uploader" method = "POST" 
          enctype = "multipart/form-data">
          <h3>SynBioHub</h3>
-         <label for="username1">Username</label><br>
+         <b><label for="username1">Username</label><br>
          <input type="text" id="sbhusername" name="sbhusername"><br>
-         <label for="pwd1">Password</label><br>
+         <label for="pwd1">Password</label><br></b>
          <input type="password" id="sbhpwd" name="sbhpwd"><br>
-         <label for="collec1">Submission Collection Name</label><br>
-         <input type="text" id="sbhcollec" name="sbhcollec" pattern="[a-z,A-Z,0-9]"><br>
-         <label for="overwrite1">Overwrite Collections of the same name?</label><br>
+         <label for="collec1"><b>Submission Collection Name </b><br> This must be characters a-z,A-Z, or 0-9. It may not contain spaces and must start with a letter.</label><br>
+         <input type="text" id="sbhcollec" name="sbhcollec" pattern="[a-z,A-Z]{1}[a-z,A-Z,0-9]{0,}"><br>
+         <b><label for="overwrite1">Overwrite Collections of the same name?</label><br></b>
          <input type="checkbox" id="sbhover" name="sbhover"><br>
          <br>
          <h3>Flapjack</h3>
-         <label for="username2">Username</label><br>
+         <b><label for="username2">Username</label><br>
          <input type="text" id="fjusername" name="fjusername"><br>
          <label for="pwd2">Password</label><br>
-         <input type="password" id="fjpwd" name="fjpwd"><br>
+         <input type="password" id="fjpwd" name="fjpwd"><br></b>
          <br>
          <h3>Excel File</h3>
          <input type = "file" name = "file" /><br>
